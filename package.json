@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "yarn ts-node-dev src/index.ts",
-    "start": "yarn ts-node-dev src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "yarn build/index.js",
+    "build": "tsc",
+    "postinstall": "yarn build"
   },
   "keywords": [
     "nodejs",
@@ -25,6 +26,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "ts-node": "^9.0.0"
   }
 }
