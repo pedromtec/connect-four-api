@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "yarn ts-node-dev src/index.ts",
-    "start": "yarn build/index.js",
+    "start": "node ./build/index.js",
     "build": "tsc",
     "postinstall": "yarn build"
   },
