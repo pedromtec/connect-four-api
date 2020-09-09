@@ -1,10 +1,10 @@
-import { getMove } from './utils/minimax';
+import { getMove } from './utils/minimax'
 import express, { Request, Response} from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-const app = express();
-const port = 8080;
+const app = express()
+const port = process.env.PORT || 8080 
 
 app.use(cors())
 app.use(bodyParser.json());
