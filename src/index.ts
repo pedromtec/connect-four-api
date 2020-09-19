@@ -1,24 +1,37 @@
-import { getMove } from './utils/minimax'
+import { getMove as getMoveMinimax } from './utils/minimax'
+import { getMove as getMoveAlphaBeta } from './utils/alphaBeta'
 import express, { Request, Response} from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
+const BOTS = {
+  MINIMAX: 1,
+  ALPHA_BETA: 2
+}
+
+const BOTS_MOVES = {
+  [BOTS.MINIMAX]: getMoveMinimax,
+  [BOTS.ALPHA_BETA]: getMoveAlphaBeta
+}
+
 const app = express()
-const port = process.env.PORT || 8080 
+const PORT = process.env.PORT || 8080 
 
 app.use(cors())
 app.use(bodyParser.json());
 
 app.get('/', (req: Request, res: Response) => {
-  return res.json({ok: 'Connect four sever!'})
+  return res.json({ok: 'Connectfour sever!'})
 })
 
 app.post( "/move", async (req: Request, res: Response) => {
-    const { board, depth } = req.body
-    const column = await getMove(board, depth)
-    return res.json({column})
-} );
+    const { board, depth, bot = BOTS.MINIMAX } = req.body
+    const t0 = new Date();
+    const column = await BOTS_MOVES[bot](board, depth)
+    const t1 = new Date()
+    return res.json({column, time: t1.getMilliseconds() - t0.getMilliseconds() })
+})
 
-app.listen( port, () => {
-    console.log( `server started at http://localhost:${ port }` );
-} );
+app.listen(PORT, () => {
+    console.log( `server started at http://localhost:${ PORT }`)
+})
