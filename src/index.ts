@@ -26,10 +26,10 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post( "/move", async (req: Request, res: Response) => {
     const { board, depth, bot = BOTS.MINIMAX } = req.body
-    const t0 = new Date();
+   
     const column = await BOTS_MOVES[bot](board, depth)
-    const t1 = new Date()
-    return res.json({column, time: t1.getMilliseconds() - t0.getMilliseconds() })
+  
+    return res.json({ column })
 })
 
 app.listen(PORT, () => {
